@@ -1,8 +1,19 @@
 import os
 import datetime
 from openpyxl import load_workbook
-from datetime import timedelta
 from termcolor import colored
+
+
+def confirm_dates():
+    data = load_workbook(filename='data.xlsx')
+    mes = data["Marzo 2019"]
+    now = datetime.datetime.now()
+    for i in range(2, mes.max_row):
+        exit_row = read(mes, 5, i)
+        if now.strftime("%Y-%m-%d") != read(mes, 1, i):
+            if exit_row == None :
+                write(mes, 5, i, "no ha salido")
+    data.save('data.xlsx')
 
 
 def read(sheet, col, row):
@@ -17,18 +28,18 @@ def write(sheet, col, row, val):
 def long_month(str_month):
     now = datetime.datetime.now()
     month = {
-        '01' : 'Enero',
-        '02' : 'Febrero',
-        '03' : 'Marzo',
-        '04' : 'Abril',
-        '05' : 'Mayo',
-        '06' : 'Junio',
-        '07' : 'Julio',
-        '08' : 'Agosto',
-        '09' : 'Septiembre',
-        '10' : 'Octubre',
-        '11' : 'Noviembre',
-        '12' : 'Deciembre'
+        '01': 'Enero',
+        '02': 'Febrero',
+        '03': 'Marzo',
+        '04': 'Abril',
+        '05': 'Mayo',
+        '06': 'Junio',
+        '07': 'Julio',
+        '08': 'Agosto',
+        '09': 'Septiembre',
+        '10': 'Octubre',
+        '11': 'Noviembre',
+        '12': 'Deciembre'
     }
     return month[str_month] + ' ' + now.strftime("%Y")
 
@@ -43,7 +54,7 @@ def crear_cabeceras(sheet):
 
 
 def log():
-    data = load_workbook(filename = 'data.xlsx')
+    data = load_workbook(filename='data.xlsx')
     personal = data["Personal"]
     now = datetime.datetime.now()
     os.system('clear')
@@ -89,19 +100,7 @@ def log():
     data.save('data.xlsx')
 
 
-def confirm_dates():
-    data = load_workbook(filename = 'data.xlsx')
-    mes = data ["Marzo 2019"]
-    now = datetime.datetime.now()
-    for i in range(2, mes.max_row):
-        exit_row = read(mes, 5, i)
-        if now.strftime("%Y-%m-%d") != read(mes, 1, i):
-            if exit_row == None :
-                write(mes, 5, i, "no ha salido")
-    data.save('data.xlsx')
-
-
 confirm_dates()
 
-while True :
+while True:
     log()
